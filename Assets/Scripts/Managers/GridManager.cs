@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -46,11 +47,20 @@ public class GridManager : MonoBehaviour
 
          _cam.transform.position = new Vector3((float)_width / 2 - 0.5f, (float)_height / 2 - 0.5f, -10);
 
-        GameManager.Instance.ChangeState(GameState.SpawnHeroes);
-    } 
-        
+        GameManager.Instance.ChangeState(GameState.SpawnPlayers);
+    }
+    public Tile GetPlayerSpawnTile()
+    {
+        return _tiles.Where(t => t.Key.x < _width / 2 && t.Value.Walkable).OrderBy(t => Random.value).First().Value;
+    }
+    public Tile GetEnemySpawnTile()
+    {
+        return _tiles.Where(t => t.Key.x > _width / 2 && t.Value.Walkable).OrderBy(t => Random.value).First().Value;
+    }
 
-   public Tile GetTileAtPosition(Vector2 pos)
+
+
+    public Tile GetTileAtPosition(Vector2 pos)
     {
         if (_tiles.TryGetValue(pos, out var tile)) return tile;
         return null;

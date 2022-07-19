@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         ChangeState(GameState.GenerateGrid);
+        Debug.Log('s');
     }
     public void ChangeState(GameState newState)
     {
@@ -24,15 +25,15 @@ public class GameManager : MonoBehaviour
             case GameState.GenerateGrid:
                 GridManager.Instance.GenerateGrid();
                 break;
-            case GameState.SpawnHeroes:
-
+            case GameState.SpawnPlayers:
+                UnitManager.Instance.SpawnPlayer();
                 break;
             case GameState.SpawnEnemies:
 
                 break;
-            case GameState.HeroesTurn:
+            case GameState.PlayerTurn:
                 break;
-            case GameState.EnemiesTurn:
+            case GameState.EnemyTurn:
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
@@ -44,10 +45,10 @@ public class GameManager : MonoBehaviour
 public enum GameState
 {
     GenerateGrid = 0,
-    SpawnHeroes = 1,
+    SpawnPlayers = 1,
     SpawnEnemies = 2,
-    HeroesTurn = 3,
-    EnemiesTurn = 4
+    PlayerTurn = 3,
+    EnemyTurn = 4
 }
 
 
